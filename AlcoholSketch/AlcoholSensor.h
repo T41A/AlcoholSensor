@@ -15,8 +15,6 @@ class Alcohol
     double measureBAC();
     void resetValues();
     bool warmingUp = true;
-
-
   private:
     long timeInterval; // wait 5 minutes
     int alcoholSensorPin;

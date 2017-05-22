@@ -5,11 +5,11 @@ const int buttonPinStartMeasurement = 1;
 const int buttonPinGetLastMeasurement = 2;
 
 Alcohol alc(300000, A0, 20, 100);
+
 void setup() {
   Serial.begin(9600);
   pinMode(buttonPinStartMeasurement, INPUT);
   pinMode(buttonPinGetLastMeasurement, INPUT);
-
 }
 
 void loop()

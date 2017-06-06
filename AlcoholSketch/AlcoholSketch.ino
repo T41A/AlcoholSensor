@@ -4,7 +4,7 @@
 const int buttonPinStartMeasurement = 1;
 const int buttonPinGetLastMeasurement = 2;
 
-Alcohol alc(300000, A0, 20, 100);
+Alcohol alc(300000, A0, 20, 100); // Wat is A0? en de andere magische cijfers
 
 void setup() {
   Serial.begin(9600);

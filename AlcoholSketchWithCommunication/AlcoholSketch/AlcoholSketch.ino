@@ -6,7 +6,6 @@
 #include "AlcoholSensor.h"
 
 const int buttonPinStartMeasurement = 1;
-const int buttonPinGetLastMeasurement = 2;
 
 const int timeInterval = 300000;
 const int sensorPin =  A0;
@@ -21,33 +20,27 @@ void setup() {
   Serial.begin(9600);
   while (!Serial); // Wait for Serial connection from PC
   SPI.setClockDivider(SPI_CLOCK_DIV8); // Setup SPI
-  
+
   // Setup CAN
   if (!_com.Init()) {
     Serial.println("Setting up CAN failed");
   }
-  
+
   _com.SetCallback(GetMessage); // Set callback
-  
+
   //setting pinModes
   pinMode(buttonPinStartMeasurement, INPUT);
-  pinMode(buttonPinGetLastMeasurement, INPUT);
+
 }
 
 void loop()
 {
-  double _BACreading = 0;
   while (alc.warmingUp == true) alc.warmUp();
-  if (msg.data[1] == 2 && alc.warmingUp == false) //mockup, got message "start BAC reading"
+  if (buttonPinStartMeasurement == HIGH && alc.warmingUp == false) 
   {
-    _BACreading = alc.measureBAC();
-  }
-  if (msg.data[1] == 1) //mockup "Send BAC reading"
-  {
+    alc.measureBAC();
     SendMsg();
   }
-
-  _com.Read();
 }
 
 // Gets called when message is recieved, msg.data contains the data.

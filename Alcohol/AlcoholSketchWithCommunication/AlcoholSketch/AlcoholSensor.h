@@ -25,7 +25,7 @@ class Alcohol
     int timeBetweenMeasurementReadings;
     unsigned long previousMillis = 0;
     int state = 0;
-    double lastReading = 0;
+    int lastReading = 0;
 };
 
 Alcohol::Alcohol(int _timeInterval, int _alcoholSensorPin, int _numberOfMeasurementReadings, int _timeBetweenMeasurementReadings)
@@ -50,11 +50,11 @@ void Alcohol::warmUp()
 double Alcohol::measureBAC() //double terug returnen
 {
   state = 1;
-  double highestReading;
+  int highestReading;
   for (int i = 0; i < numberOfMeasurementReadings; i++)
   {
     int readAlcoholSensor = analogRead(alcoholSensorPin);
-    double calculatedBAC = (readAlcoholSensor * 0.08) / 450;
+    int calculatedBAC = ((readAlcoholSensor * 0.08) / 450)* 100;
     if (highestReading < calculatedBAC)
     {
       highestReading = calculatedBAC;
@@ -82,7 +82,8 @@ int Alcohol::getState()
 
 int Alcohol::getLastReading()
 {
-  return (int)lastReading;
+
+  return lastReading;
 }
 
 #endif

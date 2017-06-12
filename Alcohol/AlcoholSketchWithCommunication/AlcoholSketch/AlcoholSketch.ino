@@ -7,7 +7,7 @@
 
 const int buttonPinStartMeasurement = 1;
 
-const int timeInterval = 300000;
+const int timeInterval = 1000;
 const int sensorPin =  A0;
 const int numberOfReadings = 20;
 const int timeBetweenReadings = 100;
@@ -36,9 +36,9 @@ void setup() {
 void loop()
 {
   while (alc.warmingUp == true) alc.warmUp();
-  if (buttonPinStartMeasurement == HIGH && alc.warmingUp == false) 
+  if (alc.warmingUp == false) 
   {
-    alc.measureBAC();
+    Serial.println(alc.measureBAC());
     SendMsg();
   }
 }
@@ -57,7 +57,7 @@ void SendMsg() {
   msg.adrsValue = 0x60;
   msg.isExtendedAdrs = false;
   msg.rtr = false;
-  msg.dataLength = 8;
+  msg.dataLength = 2;
   msg.data[0] = alc.getLastReading();
   msg.data[1] = alc.getState();
   msg.data[2] = 0;

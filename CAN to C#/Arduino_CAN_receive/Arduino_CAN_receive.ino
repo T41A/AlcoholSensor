@@ -36,9 +36,9 @@ void loop()
     CAN0.readMsgBuf(&rxId, &len, rxBuf);      // Read data: len = data length, buf = data byte(s)
     
     if((rxId & 0x80000000) == 0x80000000)     // Determine if ID is standard (11 bits) or extended (29 bits)
-      sprintf(msgString, "0x%.8lX", (rxId & 0x1FFFFFFF));
+      sprintf(msgString, "%.8lX", (rxId & 0x1FFFFFFF));
     else
-      sprintf(msgString, "0x%.3lX", rxId);
+      sprintf(msgString, "%.3lX", rxId);
   
     Serial.print(msgString);
   
@@ -47,7 +47,7 @@ void loop()
       //Serial.print(msgString);
     } else {
       for(byte i = 0; i<len; i++){
-        sprintf(msgString, ":0x%.2X", rxBuf[i]);
+        sprintf(msgString, ":%.2X", rxBuf[i]);
         Serial.print(msgString);
       }
     }

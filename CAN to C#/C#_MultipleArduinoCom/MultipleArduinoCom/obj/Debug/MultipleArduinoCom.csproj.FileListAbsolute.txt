@@ -25,3 +25,6 @@ C:\Users\rick_\Desktop\CAN to C#\MultipleArduinoCom\MultipleArduinoCom\obj\Debug
 C:\Users\rick_\Desktop\CAN to C#\MultipleArduinoCom\MultipleArduinoCom\obj\Debug\MultipleArduinoCom.Form1.resources
 C:\Users\rick_\Desktop\CAN to C#\MultipleArduinoCom\MultipleArduinoCom\obj\Debug\MultipleArduinoCom.Properties.Resources.resources
 C:\Users\rick_\Desktop\CAN to C#\MultipleArduinoCom\MultipleArduinoCom\obj\Debug\MultipleArduinoCom.csproj.GenerateResource.Cache
+C:\Users\rick_\Documents\GitHub\AlcoholSensor\CAN to C#\C#_MultipleArduinoCom\MultipleArduinoCom\bin\Debug\MultipleArduinoCom.exe.config
+C:\Users\rick_\Documents\GitHub\AlcoholSensor\CAN to C#\C#_MultipleArduinoCom\MultipleArduinoCom\obj\Debug\MultipleArduinoCom.exe
+C:\Users\rick_\Documents\GitHub\AlcoholSensor\CAN to C#\C#_MultipleArduinoCom\MultipleArduinoCom\obj\Debug\MultipleArduinoCom.pdb

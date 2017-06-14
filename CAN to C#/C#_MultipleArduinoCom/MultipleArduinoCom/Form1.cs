@@ -8,12 +8,20 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO.Ports;
+using uPLibrary.Networking.M2Mqtt;
+
 namespace MultipleArduinoCom
 {
     public partial class Form1 : Form
     {
-        ArduinoSerialPort Arduino1 = new ArduinoSerialPort("COM8", 9600);
-        ArduinoSerialPort Arduino2 = new ArduinoSerialPort("COM7", 9600);
+        ArduinoSerialPort Arduino1 = new ArduinoSerialPort("COM6", 9600);
+
+        // MQTT Constants
+        private const string MqttBroker = "146.185.157.205";
+        private const string MqttUser = "debug";
+        private const string MqttPass = "fhict";
+        private MqttClient client;
+
         public Form1()
         {
             InitializeComponent();
@@ -22,17 +30,27 @@ namespace MultipleArduinoCom
             {
                 lblArduino1.Text = "Arduino1: Connected!";
             }
-            if (Arduino2.Connect())
+
+            // Setup MQTT
+            client = new MqttClient(MqttBroker);
+            string clientId = Guid.NewGuid().ToString();
+            try
             {
-                lblArduino2.Text = "Arduino2: Connected!";
+                client.Connect(clientId, MqttUser, MqttPass);
             }
+            catch (Exception e)
+            {
+                MessageBox.Show("MQTT Connection broken, check your internet connection and restart.");
+                this.Close();
+            }
+            client.Publish("DRINQ", Encoding.ASCII.GetBytes("CAN-Uart Node Started"));
+            
 
         }
 
         private void btClose_Click(object sender, EventArgs e)
         {
             Arduino1.close();
-            Arduino2.close();
         }
 
 
@@ -40,20 +58,16 @@ namespace MultipleArduinoCom
         {
             if (Arduino1.hasData())
             {
-                lbReadedDataArduino1.Items.Add(Arduino1.readData());
+                string msg = Arduino1.readData();
+                lbReadedDataArduino1.Items.Add(msg);
+                client.Publish("DRINQ", Encoding.ASCII.GetBytes(msg));
             }
-            if (Arduino2.hasData())
-            {
-                lbReadedDataArduino2.Items.Add(Arduino2.readData());
-            }
-            if(lbReadedDataArduino1.Items.Count > 20)
-            {
-                lbReadedDataArduino1.Items.Clear();
-            }
-            if(lbReadedDataArduino2.Items.Count > 20)
-            {
-                lbReadedDataArduino2.Items.Clear();
-            }
+            lbReadedDataArduino1.SelectedIndex = lbReadedDataArduino1.Items.Count - 1;
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            lbReadedDataArduino1.Items.Clear();
         }
     }
 }

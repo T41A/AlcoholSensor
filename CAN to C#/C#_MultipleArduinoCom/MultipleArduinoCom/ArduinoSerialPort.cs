@@ -48,27 +48,15 @@ namespace MultipleArduinoCom
 
         public string readData()
         {
-            if(ArduinoSerial.IsOpen)
-            {
-                return ArduinoSerial.ReadLine();
-            }
-            else
-            {
-                return null;
-            }
+            if (!ArduinoSerial.IsOpen) return null;
+            return ArduinoSerial.ReadLine();
         }
 
         public bool writeData(string data)
         {
-            if (ArduinoSerial.IsOpen)
-            {
-                ArduinoSerial.Write(data + '\n');
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            if (!ArduinoSerial.IsOpen) return false;
+            ArduinoSerial.Write(data + '\n');
+            return true;
         }
 
         public void close()
